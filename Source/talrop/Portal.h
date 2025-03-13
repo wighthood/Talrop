@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "components/BoxComponent.h"
 #include "Portal.generated.h"
+
+
+class UBoxComponent;
 
 UCLASS()
 class TALROP_API APortal : public AActor
@@ -27,15 +29,6 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Portal")
 	UBoxComponent* TriggerBox;
 
-	UPROPERTY(EditAnywhere, Category = "Portal")
-	APortal* LinkedPortal;
-
-	UFUNCTION(BlueprintCallable, Category = "Portal")
-	void LinkPortal(APortal* OtherPortal);
-
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-private:
-	void TeleportActor(AActor* ActorToTeleport);
 };
