@@ -9,8 +9,8 @@
 
 class UBoxComponent;
 
-UCLASS()
-class TALROP_API APortal : public AActor
+UCLASS(config = Game)
+class APortal : public AActor
 {
 	GENERATED_BODY()
 	
@@ -29,6 +29,13 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Portal")
 	UBoxComponent* TriggerBox;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Portal")
+    APortal* DestinationPortal;
+
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void PortalLink(APortal* OtherPortal);
+
 };

@@ -18,6 +18,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<class AtalropProjectile> ProjectileClass;
 
+	UPROPERTY(EditDefaultsOnly, Category=Portal)
+	TSubclassOf<class APortal> PortalClass;
+
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
 	USoundBase* FireSound;

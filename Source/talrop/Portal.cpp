@@ -13,7 +13,7 @@ APortal::APortal()
 	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	RootComponent = TriggerBox;
 
-	TriggerBox->SetBoxExtent(FVector(50.0f, 50.0f, 100.0f));
+	TriggerBox->SetBoxExtent(FVector(50.0f, 10.0f, 50.0f));
 
 	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &APortal::OnOverlapBegin);
 }
@@ -35,7 +35,16 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 {
 	if (OtherActor && OtherActor->IsA(ACharacter::StaticClass()))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hello"));
+		if (DestinationPortal != nullptr)
+		{
+			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation());
+		}
 	}
+}
+
+void APortal::PortalLink(APortal* OtherPortal)
+{
+	DestinationPortal = OtherPortal;
+	OtherPortal->DestinationPortal = this;
 }
 
