@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Portal.generated.h"
 
-
 class UBoxComponent;
 
 UCLASS(config = Game)

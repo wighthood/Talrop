@@ -67,14 +67,14 @@ void UtalropWeaponComponent::SpawnPortal(int Index)
 				Portals[Index] = World->SpawnActor<APortal>(PortalClass, OutHit.ImpactPoint, OutHit.Normal.Rotation(), ActorSpawnParams);
 				if (Index+1 == MaxIndex)
 				{
-					if (Portals[0] != nullptr)
+					if (Portals[0] != nullptr && Portals[Index]->DestinationPortal == nullptr)
 					{
 						Portals[Index]->PortalLink(Portals[0]);
 					}
 				}
 				else
 				{
-					if (Portals[Index + 1] != nullptr)
+					if (Portals[Index + 1] != nullptr && Portals[Index]->DestinationPortal == nullptr)
 					{
 						Portals[Index]->PortalLink(Portals[Index + 1]);
 					}

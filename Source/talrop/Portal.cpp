@@ -28,16 +28,16 @@ void APortal::BeginPlay()
 void APortal::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor && OtherActor->IsA(ACharacter::StaticClass()))
+	if (OtherActor && !OtherActor->IsA(APortal::StaticClass()))
 	{
 		if (DestinationPortal != nullptr)
 		{
-			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector()*100);
+			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector()*200);
+
 		}
 	}
 }

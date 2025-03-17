@@ -88,6 +88,7 @@ void AtalropCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
+
 void AtalropCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
