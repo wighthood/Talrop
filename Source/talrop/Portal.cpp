@@ -37,7 +37,7 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 	{
 		if (DestinationPortal != nullptr)
 		{
-			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation());
+			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector()*100);
 		}
 	}
 }

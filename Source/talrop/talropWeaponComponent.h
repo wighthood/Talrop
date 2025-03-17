@@ -18,8 +18,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category=Projectile)
 	TSubclassOf<class AtalropProjectile> ProjectileClass;
 
+	UPROPERTY (EditDefaultsOnly, Category=Projectile)
+	int MaxIndex =2;
+
 	UPROPERTY(EditDefaultsOnly, Category=Portal)
 	TSubclassOf<class APortal> PortalClass;
+
+	UPROPERTY(EditDefaultsOnly, Category=Portal)
+	TArray<class APortal*> Portals;
 
 	/** Sound to play each time we fire */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Gameplay)
@@ -41,6 +47,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* FireAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	class UInputAction* FireActionRight;
+
 	/** Sets default values for this component's properties */
 	UtalropWeaponComponent();
 
@@ -48,9 +57,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Weapon")
 	bool AttachWeapon(AtalropCharacter* TargetCharacter);
 
+	void SpawnPortal(int Index);
+
 	/** Make the weapon Fire a Projectile */
 	UFUNCTION(BlueprintCallable, Category="Weapon")
 	void Fire();
+
+	UFUNCTION(BlueprintCallable, Category="Weapon")
+    void FirePortalRight();
 
 protected:
 	/** Ends gameplay for this component. */

@@ -38,4 +38,5 @@ public:
 	UFUNCTION()
 	void PortalLink(APortal* OtherPortal);
 
+
 };
