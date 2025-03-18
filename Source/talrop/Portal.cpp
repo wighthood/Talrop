@@ -4,6 +4,7 @@
 #include "Portal.h"
 #include "GameFramework/Character.h"
 #include "Components/BoxComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 APortal::APortal()
@@ -36,8 +37,17 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 	{
 		if (DestinationPortal != nullptr)
 		{
-			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector()*200);
+			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector()*150);
 
+			ACharacter* Character = Cast<ACharacter>(OtherActor);
+			if (Character)
+			{
+				UCharacterMovementComponent* MovementComponent = Character->GetCharacterMovement();
+				if (MovementComponent)
+				{
+					MovementComponent->AddImpulse(DestinationPortal->GetActorForwardVector() * OtherActor->GetVelocity(), true);
+				}
+			}
 		}
 	}
 }
