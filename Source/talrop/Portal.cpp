@@ -37,21 +37,20 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 	{
 		if (DestinationPortal != nullptr)
 		{
-			FRotator DeltaPortal = GetActorRotation() *-1 - DestinationPortal->GetActorRotation();
-			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector() + 100);
+			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector() * 200);
 
 			ACharacter* Character = Cast<ACharacter>(OtherActor);
 			if (Character)
 			{
 				FRotator newRotation = Character->GetActorRotation();
 				newRotation.Yaw = RelativeLinkRotation(Character->GetControlRotation().Quaternion()).Rotator().Yaw;
+				newRotation.Pitch = RelativeLinkRotation(Character->GetControlRotation().Quaternion()).Rotator().Pitch;
 				Character->GetController()->SetControlRotation(newRotation);
 				UCharacterMovementComponent* MovementComponent = Character->GetCharacterMovement();
 				if (MovementComponent)
 				{
 					MovementComponent->AddImpulse(Character->GetControlRotation().Vector() * Character->GetVelocity(), true);
-				}
-				
+				}		
 			}
 		}
 	}
