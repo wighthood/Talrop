@@ -39,6 +39,7 @@ AtalropCharacter::AtalropCharacter()
 
 //////////////////////////////////////////////////////////////////////////// Input
 
+
 void AtalropCharacter::NotifyControllerChanged()
 {
 	Super::NotifyControllerChanged();

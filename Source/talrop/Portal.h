@@ -37,5 +37,6 @@ public:
 	UFUNCTION()
 	void PortalLink(APortal* OtherPortal);
 
-
+	UFUNCTION()
+	FQuat RelativeLinkRotation(FQuat Rot) const;
 };

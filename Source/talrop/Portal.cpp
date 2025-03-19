@@ -37,20 +37,38 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 	{
 		if (DestinationPortal != nullptr)
 		{
-			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector()*150);
+			FRotator DeltaPortal = GetActorRotation() *-1 - DestinationPortal->GetActorRotation();
+			OtherActor->SetActorLocation(DestinationPortal->GetActorLocation()+DestinationPortal->GetActorForwardVector() + 100);
 
 			ACharacter* Character = Cast<ACharacter>(OtherActor);
 			if (Character)
 			{
+				FRotator newRotation = Character->GetActorRotation();
+				newRotation.Yaw = RelativeLinkRotation(Character->GetControlRotation().Quaternion()).Rotator().Yaw;
+				Character->GetController()->SetControlRotation(newRotation);
 				UCharacterMovementComponent* MovementComponent = Character->GetCharacterMovement();
 				if (MovementComponent)
 				{
-					MovementComponent->AddImpulse(DestinationPortal->GetActorForwardVector() * OtherActor->GetVelocity(), true);
+					MovementComponent->AddImpulse(Character->GetControlRotation().Vector() * Character->GetVelocity(), true);
 				}
+				
 			}
 		}
 	}
 }
+
+FQuat APortal::RelativeLinkRotation(FQuat Rot) const
+{
+	if (!DestinationPortal)
+		return FQuat::Identity;
+
+	FQuat localIn = GetActorQuat().Inverse() * Rot;
+
+	FQuat EndRotation = DestinationPortal->GetActorQuat() * (FQuat(0, 0, 1, 0) * localIn);
+
+	return EndRotation;
+}
+
 
 void APortal::PortalLink(APortal* OtherPortal)
 {
