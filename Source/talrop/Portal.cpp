@@ -47,10 +47,13 @@ void APortal::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 				newRotation.Pitch = RelativeLinkRotation(Character->GetControlRotation().Quaternion()).Rotator().Pitch;
 				Character->GetController()->SetControlRotation(newRotation);
 				UCharacterMovementComponent* MovementComponent = Character->GetCharacterMovement();
-				if (MovementComponent)
+				if (MovementComponent != nullptr)
 				{
-					MovementComponent->AddImpulse(Character->GetControlRotation().Vector() * Character->GetVelocity(), true);
-				}		
+					FVector Velocity = MovementComponent->Velocity;
+
+					MovementComponent->AddImpulse(-Velocity, true);
+					MovementComponent->AddImpulse(RelativeLinkRotation(Velocity.ToOrientationQuat()).Vector()*1000, true);
+				}
 			}
 		}
 	}
